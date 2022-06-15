@@ -14,9 +14,13 @@ jobs:
         runs-on: ubuntu-latest
         env:
           GCP_APP_NAME: "cloud-run-actions-example"
-          IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.GCP_APP_NAME }}
-          
+          # IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.GCP_APP_NAME }}
+                    
         steps:
+
+        - name: Set env variables
+          run: echo  "IMAGE_NAME=gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.GCP_APP_NAME }}" >> $GITHUB_ENV
+
         
         - name: Login
           # uses: GoogleCloudPlatform/github-actions/setup-gcloud@v0
