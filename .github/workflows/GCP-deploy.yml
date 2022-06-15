@@ -15,7 +15,7 @@ jobs:
         env:
           GCP_APP_NAME: "cloud-run-actions-example"
           # IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.GCP_APP_NAME }}
-                    
+
         steps:
 
         - name: Set env variables
@@ -46,6 +46,6 @@ jobs:
           run: docker push $IMAGE_NAME
 
         - name: Deploy Docker image
-          run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME --region us-central1 --platform managed --allow-unauthenticated
+          run: gcloud run deploy ${{ env.GCP_APP_NAME }} --image $IMAGE_NAME --region us-central1 --platform managed --allow-unauthenticated
 
 
