@@ -14,7 +14,7 @@ jobs:
         runs-on: ubuntu-latest
         env:
           GCP_APP_NAME: "cloud-run-actions-example"
-          IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/$GCP_APP_NAME
+          IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.GCP_APP_NAME }}
           
         steps:
         
@@ -44,4 +44,4 @@ jobs:
         - name: Deploy Docker image
           run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME --region us-central1 --platform managed --allow-unauthenticated
 
-          
+
