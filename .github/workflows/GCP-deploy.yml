@@ -13,15 +13,17 @@ jobs:
         name: Deploy
         runs-on: ubuntu-latest
         env:
-          IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}
+          GCP_APP_NAME: "cloud-run-actions-example"
+          IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/$GCP_APP_NAME
+          
         steps:
         
         - name: Login
           uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
           with:
             project_id: ${{ secrets.GCP_PROJECT_ID }}
-            service_account_email: ${{ secrets.GCP_EMAIL }}
-            service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+            service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+            service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_PRIVATE_KEY }}
             
         - name: Configure Docker
           run: gcloud auth configure-docker --quiet
@@ -40,4 +42,3 @@ jobs:
 
         - name: Deploy Docker image
           run: gcloud run deploy ${{ secrets.GCP_PROJECT_ID }} --image $IMAGE_NAME --region us-central1 --platform managed --allow-unauthenticated
-          
